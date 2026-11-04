@@ -44,3 +44,35 @@ test('keeps 80 characters when the cut falls exactly on the limit', () => {
 test('cuts a first word longer than 80 characters at 80', () => {
   assert.equal(slugify('a'.repeat(100)), 'a'.repeat(80));
 });
+
+test('slugify is idempotent: slugify(slugify(x)) equals slugify(x)', () => {
+  const longTitle = 'The quick brown fox jumps over the lazy dog while the five boxing wizards jump quickly';
+  assert.ok(longTitle.length > 80);
+  const titles = [
+    'Hello World',
+    'Hello,   World!!',
+    '  --Hello--  ',
+    '!!!',
+    'Café au lait',
+    'Crème Brûlée',
+    'ÉCOLE Ñandú',
+    'Phở Việt',
+    'Résumé',
+    Array.from({ length: 20 }, (_, i) => `Word${i % 10}`).join(' '),
+    `${'x'.repeat(39)} ${'y'.repeat(40)} z`,
+    'a'.repeat(80),
+    'a'.repeat(100),
+    longTitle,
+  ];
+  for (const title of titles) {
+    const once = slugify(title);
+    assert.equal(slugify(once), once, title);
+  }
+});
+
+test('spells letters with no decomposition in ASCII', () => {
+  assert.equal(slugify('Straße GROẞ'), 'strasse-gross');
+  assert.equal(slugify('Æsir Œuvre'), 'aesir-oeuvre');
+  assert.equal(slugify('Søren Łódź'), 'soren-lodz');
+  assert.equal(slugify('Đorđe'), 'dorde');
+});
