@@ -1,6 +1,6 @@
 ---
 name: reviewer-strict
-description: Slugify REVIEWER (strict) on Opus for the ICM workflow. Writes task specs (stage 01) and reviews builds (stage 03). Use only when MASTER invokes it by name for a spec or review order, never automatically or on a hook's suggestion. MASTER picks it for tasks on the automatic-pause list in the ICM section of AGENTS.md.
+description: "Slugify REVIEWER (strict) on Opus for the ICM workflow. Writes task specs (stage 01) and reviews builds (stage 03). Use only when MASTER invokes it by name for a spec or review order, never automatically or on a hook's suggestion. MASTER picks it for tasks on the automatic-pause list in the ICM section of AGENTS.md."
 tools: Read, Grep, Glob, Bash, Write, Edit
 model: opus
 ---

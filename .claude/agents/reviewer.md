@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Slugify REVIEWER (light) on Sonnet for the ICM workflow. Writes task specs (stage 01) and reviews builds (stage 03). Use only when MASTER invokes it by name for a spec or review order, never automatically or on a hook's suggestion. MASTER picks it for tasks outside the automatic-pause list in the ICM section of AGENTS.md.
+description: "Slugify REVIEWER (light) on Sonnet for the ICM workflow. Writes task specs (stage 01) and reviews builds (stage 03). Use only when MASTER invokes it by name for a spec or review order, never automatically or on a hook's suggestion. MASTER picks it for tasks outside the automatic-pause list in the ICM section of AGENTS.md."
 tools: Read, Grep, Glob, Bash, Write, Edit
 model: sonnet
 ---
