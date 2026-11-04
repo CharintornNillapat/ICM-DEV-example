@@ -1,4 +1,5 @@
 const MAX_LENGTH = 80;
+const LETTERS = { ß: 'ss', æ: 'ae', œ: 'oe', ø: 'o', ł: 'l', đ: 'd' };
 
 /** Turn a title into a URL slug: lowercase ASCII letters and digits joined by single hyphens, at most 80 characters, cut at a hyphen. */
 export function slugify(title) {
@@ -6,6 +7,7 @@ export function slugify(title) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
+    .replace(/[ßæœøłđ]/g, (letter) => LETTERS[letter])
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   if (slug.length <= MAX_LENGTH) return slug;

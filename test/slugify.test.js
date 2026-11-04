@@ -69,3 +69,10 @@ test('slugify is idempotent: slugify(slugify(x)) equals slugify(x)', () => {
     assert.equal(slugify(once), once, title);
   }
 });
+
+test('spells letters with no decomposition in ASCII', () => {
+  assert.equal(slugify('Straße GROẞ'), 'strasse-gross');
+  assert.equal(slugify('Æsir Œuvre'), 'aesir-oeuvre');
+  assert.equal(slugify('Søren Łódź'), 'soren-lodz');
+  assert.equal(slugify('Đorđe'), 'dorde');
+});

@@ -15,7 +15,7 @@ Read this when a task touches `src/slugify.js`, its tests or the CLI.
 
 ## Traps
 
-- Accented Latin letters keep their base letter: `slugify` decomposes its input with `normalize('NFD')` and drops the marks in U+0300 to U+036F before it lowercases (ADR 0002). A letter with no decomposition, such as `ø`, `ł`, `ß` or `æ`, still turns into a hyphen. Any change to how non-ASCII letters are handled changes the output for every title that has one.
+- Accented Latin letters keep their base letter: `slugify` decomposes its input with `normalize('NFD')` and drops the marks in U+0300 to U+036F before it lowercases (ADR 0002). Right after it lowercases, the six letters with no decomposition are spelled in ASCII from `LETTERS`: `ß` to `ss`, `æ` to `ae`, `œ` to `oe`, `ø` to `o`, `ł` to `l`, `đ` to `d`; their capitals reach the table through the lowercasing (ADR 0004). Any other letter outside `[a-z0-9]`, such as `ð`, `þ` or `ı`, still turns into a hyphen. Any change to how non-ASCII letters are handled changes the output for every title that has one.
 
 ## Tests
 
