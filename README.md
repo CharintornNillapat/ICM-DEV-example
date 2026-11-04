@@ -2,6 +2,8 @@
 
 A zero-dependency Node module that turns a title into a URL slug. It is the worked example of [ICM-DEV](https://github.com/CharintornNillapat/ICM-DEV), a template for delivering software with AI agents through spec, build and review stages. This repository was made from that template ("Use this template") and filled with Slugify's values, so `AGENTS.md`, `docs/contexts/slugify.md` and `docs/audit/` show what each part looks like in a real project.
 
+Filled from ICM-DEV commit [`363c13d`](https://github.com/CharintornNillapat/ICM-DEV/commit/363c13d) (the template after its fixes 1).
+
 ```js
 import { slugify } from './src/slugify.js';
 slugify('Hello, World!'); // 'hello-world'
@@ -28,7 +30,7 @@ node --test scripts/git-hooks/pre-push.test.mjs
 
 ## The recorded history
 
-Phase 001 (T001, accented letters) and Phase 002 (T002 and T003, the 80-character cap) are recorded in `docs/audit/task-ledger.md` and `docs/audit/refactor-log.md`. Each task's spec, build report and review are in `workflow/stages/*/output/`, and the ADRs are `docs/audit/decisions/0002-*` and `0003-*`.
+Phase 001 (T001, accented letters) and Phase 002 (T002 and T003, the 80-character cap) are recorded in `docs/audit/task-ledger.md` and `docs/audit/refactor-log.md`. Each task's spec, build report and review are in `workflow/stages/*/output/`, and the ADRs are `docs/audit/decisions/0001-*` to `0003-*`.
 
 - The task outputs are copied unchanged from the original runs, which ran before this repository existed, on an earlier version of the template. A command in them that names a commit (`git show df83222:...`) cannot be re-run here.
 - In the ledger and the log, `n/a (worked example)` means the commit does not exist anywhere you can read; `n/a (worked example; ran in ICM-DEV at <sha>)` means it is a commit in ICM-DEV's history. Nothing here was merged through this repository.

@@ -1,6 +1,6 @@
 # 0003: cap a slug at 80 characters without splitting a word
 
-**Status:** Accepted. To be implemented in Phase 002 (T002).
+**Status:** Accepted. Implemented in Phase 002 (T002 to T003): code `n/a (worked example; ran in ICM-DEV at 7b69497)`, merged `n/a (worked example; ran in ICM-DEV at 9c33b67)`.
 
 **Date:** 2026-10-30
 
