@@ -1,6 +1,6 @@
 # 0004: spell the letters with no decomposition in ASCII
 
-**Status:** Accepted. Implemented in Phase 003 (T004 to T005): code `<sha>`, merged `<sha>`.
+**Status:** Accepted. Implemented in Phase 003 (T004 to T005): code `1bed1ab`, merged `e12b266`.
 
 **Date:** 2026-11-04
 

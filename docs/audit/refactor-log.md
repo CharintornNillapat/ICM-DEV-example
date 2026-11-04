@@ -15,13 +15,14 @@ ADR `NNNN`. <the brief, one or two sentences>
 **Deliberately not done:** <or none>
 ```
 
-## Phase 003 - translit: T004, T005 (2026-11-04, code `<sha>`, docs `<sha>`, merged `<sha>`)
+## Phase 003 - translit: T004, T005 (2026-11-04, code `1bed1ab`, docs `1bed1ab`, merged `e12b266`)
 
 ADR `0004`. `slugify` spells `ß`, `æ`, `œ`, `ø`, `ł` and `đ`, and their capitals, in ASCII instead of turning them into hyphens: `'Straße'` becomes `'strasse'`. A test now pins `slugify(slugify(x))` equals `slugify(x)` (T004).
 
 **Changed:** `docs/audit/task-ledger.md` and `test/slugify.test.js` (T004: the idempotence test and its ledger row); `docs/audit/decisions/0004-spell-undecomposed-letters-in-ascii.md` (new ADR, T005); `src/slugify.js` (`LETTERS` table and its replace after lowercasing, T005); `test/slugify.test.js` (spelling test, T005); `docs/contexts/slugify.md` (Traps line, T005); `docs/audit/refactor-log.md` (this entry); `docs/audit/task-ledger.md` (Phase 003 heading and T005 row).
 **Verified:** npm run lint exit 0; node --test test/slugify.test.js tests 10 pass 10 fail 0; npm test tests 10 pass 10 fail 0; red run before the final assertion: tests 10 pass 9 fail 1 (output/logs/T004-red.log); e2e not run (no bin/ or e2e/ path); em dash 0 in touched files
 T005: npm run lint exit 0; node --test test/slugify.test.js tests 11 pass 11 fail 0 (red run before edit 2: tests 11 pass 10 fail 1, output/logs/T005-red.log); npm test tests 11 pass 11 fail 0; node --test e2e/cli.test.js tests 1 pass 1 fail 0; npm run test:e2e left to the reviewer
+Post-merge (PR #2, merge commit `e12b266`, a merge commit and not a squash; main checked out at it): npm run lint exit 0; npm test tests 11 pass 11 fail 0; npm run test:e2e tests 1 pass 1 fail 0. The repo has no CI workflow and no deployment, so no check ran on the PR and there is no production result (CI: none).
 **Surprises:** the ADR-0004 escape gate typed inside a double-quoted shell command printed `false`; read from a script file it prints `true` (the file is unchanged, and the escapes are as the spec requires).
 **Deliberately not done:** no letter beyond the six (`ð`, `þ`, `ı`); no per-language rules; no non-Latin scripts; ADR 0002 left as written; no version bump.
 
