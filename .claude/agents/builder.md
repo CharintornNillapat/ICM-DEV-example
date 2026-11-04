@@ -1,6 +1,6 @@
 ---
 name: builder
-description: {{project_name}} BUILDER on Haiku for the ICM workflow. Builds a task from its spec (stage 02): tests first, then the change, then the gates. Use only when MASTER invokes it by name for a build or fix order, never automatically or on a hook's suggestion. It is deliberately a cheaper model than the strict reviewer: the reviewer checks every claim it makes.
+description: Slugify BUILDER on Haiku for the ICM workflow. Builds a task from its spec (stage 02): tests first, then the change, then the gates. Use only when MASTER invokes it by name for a build or fix order, never automatically or on a hook's suggestion. It is deliberately a cheaper model than the strict reviewer: the reviewer checks every claim it makes.
 tools: Read, Grep, Glob, Bash, Write, Edit
 model: haiku
 ---

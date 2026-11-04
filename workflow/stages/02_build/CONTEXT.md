@@ -45,7 +45,7 @@ When the spec lists `docs/audit/refactor-log.md`, build the phase's entry, or th
 
 ## Verify
 
-- **End-to-end tests run in their fast form only.** Run each end-to-end gate that has the fast form (`{{e2e_fast_cmd}}`). A gate in the full form (`{{e2e_cmd}}`) is the reviewer's: do not run it, and list it in the build report under `Left to the reviewer`. When the spec lists a full-form gate with no fast-form partner for the same spec files, run the partner instead. A gate that names its own scope runs as written.
+- **End-to-end tests run in their fast form only.** Run each end-to-end gate that has the fast form (``node --test e2e/<file>.test.js``). A gate in the full form (``npm run test:e2e``) is the reviewer's: do not run it, and list it in the build report under `Left to the reviewer`. When the spec lists a full-form gate with no fast-form partner for the same spec files, run the partner instead. A gate that names its own scope runs as written.
 
 ## Never
 
@@ -53,7 +53,7 @@ When the spec lists `docs/audit/refactor-log.md`, build the phase's entry, or th
 - Use MCP write tools or sign in to a live service from the dev server.
 - Run anything on `AGENTS.md`'s Stop and ask first list, including `git commit`, `git push` and any merge. Only the orchestrator commits (each APPROVED task, on the phase branch) and pushes (on the owner's push order).
 - Edit `AGENTS.md` or `CLAUDE.md`, unless the spec lists them as targets.
-- {{text_style_rule}}
+- No em dash (U+2014) in any file you write or touch.
 
 ## Shell notes
 

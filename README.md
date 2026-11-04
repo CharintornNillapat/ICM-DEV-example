@@ -1,76 +1,37 @@
-# ICM-DEV
+# Slugify: the ICM-DEV example
 
-A template for delivering software with AI agents through **folders and markdown**: a spec stage, a build stage and a review stage, each with a contract file, each writing one output file the next stage reads. It applies the Interpretable Context Methodology to software delivery.
+A zero-dependency Node module that turns a title into a URL slug. It is the worked example of [ICM-DEV](https://github.com/CharintornNillapat/ICM-DEV), a template for delivering software with AI agents through spec, build and review stages. This repository was made from that template ("Use this template") and filled with Slugify's values, so `AGENTS.md`, `docs/contexts/slugify.md` and `docs/audit/` show what each part looks like in a real project.
 
-> Van Clief, J. and McDermott, D. *Interpretable Context Methodology*. arXiv:[2603.16021](https://arxiv.org/abs/2603.16021).
-
-The official ICM repository, [`RinDig/Interpretable-Context-Methodology`](https://github.com/RinDig/Interpretable-Context-Methodology) (MIT), ships content workspaces such as slide decks and animation. This repository carries the same layers into a coding loop. It adds nothing the paper does not already say: no CLI, no installer, no framework.
-
-## The layers
-
-| Paper layer | Here |
-|---|---|
-| 0 identity | `CLAUDE.md`, which imports `AGENTS.md` |
-| 1 routing | `AGENTS.md`: the routing table and the ICM workflow section |
-| 2 stage contract | `workflow/stages/*/CONTEXT.md`: role, inputs, process, outputs, verify, never, shell notes, STATUS line |
-| 3 reference | `docs/contexts/*.md` and the ADRs in `docs/audit/decisions/` |
-| 4 working artifacts | `workflow/stages/*/output/` and the diff |
-
-## The loop
-
-```
-you ── task ──> MASTER (orchestrator, writes no code)
-                  │  spec  ──> reviewer / reviewer-strict ──> 01_spec/output/task-T001-spec.md
-                  │  (pause for you if the spec touches the pause list)
-                  │  build ──> builder ───────────────────> 02_build/output/task-T001-build.md
-                  │  review ─> reviewer / reviewer-strict ──> 03_review/output/task-T001-review.md
-                  └─ APPROVED: commit on the phase branch ... last task: push, open the PR
+```js
+import { slugify } from './src/slugify.js';
+slugify('Hello, World!'); // 'hello-world'
 ```
 
-- A **cheap builder and strong reviewers**: the builder (`haiku`) does the volume, the reviewers (`sonnet`, `opus`) re-run every gate and the failing-test-first run themselves. A build report is a claim, never evidence.
-- **One pause list**, in `AGENTS.md`. It decides when MASTER stops for you, which reviewer it picks, and when auto-merge is off.
-- **Only MASTER writes git history**, on a phase branch, through three allowed command forms. A pre-push hook refuses the rest.
-
-## Use it
-
-1. Copy these files into your repo, at its root (a project that is a folder of a larger repository is not supported): `AGENTS.md`, `CLAUDE.md`, `.claude/`, `workflow/`, `docs/`, `scripts/git-hooks/`, `.gitignore` lines, `.gitattributes`.
-2. Fill every `{{placeholder}}` (`PLACEHOLDERS.md` lists them). This must print nothing: `grep -rn "[{][{]" . --exclude-dir=.git --exclude=README.md --exclude=PLACEHOLDERS.md`.
-3. Put `main` on your remote first, then install the hook. The hook refuses to create `main`, and after it is installed `main` takes only deploy records, so do `git push -u origin main` once before the hook goes in. Then: `cp scripts/git-hooks/pre-push "$(git rev-parse --git-path hooks/pre-push)"`.
-4. Start a **new** Claude Code session in the project folder and run `/master`. It is the project command `.claude/commands/master.md`, so there is nothing to install; if an earlier version of this template told you to copy a loader to `~/.claude/commands/master.md`, delete that file. Claude Code loads `.claude/agents/` when a session starts, so a session that was already open cannot call `reviewer`, `reviewer-strict` or `builder`. Then `phase 1: my-first-phase`, then `task: <one line goal>`.
-
-Needs: Claude Code, `git`, the GitHub CLI `gh` for the release steps, Node 22 or newer for the hook test.
-
-### Permissions
-
-`.claude/settings.json` is read by Claude Code in the project folder. It allows exactly four commands without a prompt (six rules, because the two `gh` forms are listed for both Bash and PowerShell): the push of a phase branch (`ALLOW_GIT_WRITE=1 git push -u origin phase-*`), the push of `main` for the deploy record, `gh pr create --base main --head phase-* ...`, and `gh pr merge ... --auto --merge`. It denies squash, rebase and admin merges, `--no-verify`, a second base or head on `gh pr create`, and the GitHub MCP write tools. In manual mode, everything else waits on a prompt unless your own settings allow it, including `ALLOW_GIT_WRITE=1 git commit`, `git add`, `git status`, `git diff`, `gh pr view` and `gh api`. The file is not widened for you: adding an allow rule is your call.
-
-That paragraph is written for manual mode, and no run in that mode has yet checked which commands prompt. Since Claude Code v2.1.283, auto mode is the starting mode of an interactive terminal or VS Code session when no setting names a mode ([permission modes](https://code.claude.com/docs/en/permission-modes)). In auto mode a classifier decides which commands run without a prompt, so commands listed above as prompting may run unprompted (a Bash push of a branch that is not `phase-*` did, on the author's machine). Allow, ask and deny rules still resolve before the classifier: ask rules still prompt in auto mode, for example the template's `PowerShell(git push:*)` rule, and deny rules block in every mode. The pre-push hook applies in every mode, because git runs it. To see the prompts, start with `claude --permission-mode manual` and check that the status bar shows `⏸ manual mode on`.
-
-### Troubleshooting
-
-- **`/master` stops and shows you the branch or `git status`.** Step 0 of `workflow/orchestrator/MASTER.md` says: "If the branch is not a `phase-NNN-<slug>` branch, or the tree is not clean, stop and show me." An untracked local file (a scratch note, an editor folder) makes the tree not clean. Keep it out of `git status` without touching `.gitignore`: ``echo '<path>' >> "$(git rev-parse --git-path info/exclude)"``. A pattern with a slash in the middle is anchored at the repository root, so write `**/.claude/x.json` to match that file in a subfolder as well.
-- **`/master` says the pre-push guard is missing or out of date.** Check the installed hook: `cmp -s scripts/git-hooks/pre-push "$(git rev-parse --git-path hooks/pre-push)" || echo "hook missing or stale"`. If it prints the message, install it again with the step 3 command: `cp scripts/git-hooks/pre-push "$(git rev-parse --git-path hooks/pre-push)"`.
-- **`/master` says `reviewer`, `reviewer-strict` or `builder` is missing.** Quit Claude Code and start a new session in the project folder. Claude Code loads `.claude/agents/` when a session starts.
-- **`/master` says the template is not filled in and points you at `PLACEHOLDERS.md`.** `AGENTS.md` still holds `{{placeholder}}` text. Run the step 2 command: it prints a line for each placeholder left. Fill them and start `/master` again.
-
-## The example
-
-The worked example (Slugify, a tiny Node module with one task run through spec, build and review) is moving to its own repository, `ICM-DEV-example`, not published yet. Until then it is in this repository's history: `git archive 439e4b9 example/`.
-
-## Layout
-
 ```
-AGENTS.md, CLAUDE.md          rules (layers 0 and 1)
-.claude/agents/               reviewer, reviewer-strict, builder
-.claude/commands/master.md    the /master loader (preflight and runtime notes)
-.claude/settings.json         permission rules for the unattended git and gh forms
-workflow/orchestrator/        MASTER.md, runtimes.md
-workflow/stages/              01_spec, 02_build, 03_review: CONTEXT.md and output/
-docs/audit/                   ledger, refactor log, ADRs
-docs/contexts/                one file per area of the code
-scripts/git-hooks/            pre-push guard and its test
+node bin/slugify.js Hello World   # hello-world
 ```
 
-## License
+## Limits
 
-MIT, see [LICENSE](LICENSE).
+A slug is at most 80 characters. A longer one is cut at its last hyphen at or before the 80th character, so no word is split; if the first word alone is longer than 80 characters, it is cut at 80.
+
+## Run the tests
+
+Node 22 or newer. There is nothing to install.
+
+```
+npm run lint
+npm test
+npm run test:e2e
+node --test scripts/git-hooks/pre-push.test.mjs
+```
+
+## The recorded history
+
+Phase 001 (T001, accented letters) and Phase 002 (T002 and T003, the 80-character cap) are recorded in `docs/audit/task-ledger.md` and `docs/audit/refactor-log.md`. Each task's spec, build report and review are in `workflow/stages/*/output/`, and the ADRs are `docs/audit/decisions/0002-*` and `0003-*`.
+
+- The task outputs are copied unchanged from the original runs, which ran before this repository existed, on an earlier version of the template. A command in them that names a commit (`git show df83222:...`) cannot be re-run here.
+- In the ledger and the log, `n/a (worked example)` means the commit does not exist anywhere you can read; `n/a (worked example; ran in ICM-DEV at <sha>)` means it is a commit in ICM-DEV's history. Nothing here was merged through this repository.
+- How T001 ran: the three stage files and `MASTER.md` were followed in order, the spec went to the strict reviewer (`src/slugify.js` is a critical path), the build was a failing-test-first run and the review re-ran every gate itself. The agents were stand-in sub-agents, because the session had started before `.claude/agents/` existed, and the pause after the spec was waived. Release, auto-merge and the deploy record were not exercised for it.
+
+The next phase is 003: start Claude Code in this folder, run `/master`, then `phase 3: <slug>`.

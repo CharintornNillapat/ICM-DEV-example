@@ -25,7 +25,7 @@
 ## Process
 
 - A spec is specific enough that the builder needs no other judgment call. If the owner's intent is unclear, stop with `BLOCKED` and the question.
-- Critical paths ({{critical_paths}}) get a failing test first, per `AGENTS.md`.
+- Critical paths (`src/slugify.js`) get a failing test first, per `AGENTS.md`.
 - When a spec gives the exact text an edit adds or replaces, or a text a gate checks landed, each such text is its own fenced code block that holds exactly that text, with no prose, ellipsis or placeholder inside. The text-landed gate names its blocks (for example "edit 2's New text") and reads them from the spec with a script, as stage 02 step 5 says, never retyped.
 - Stop after writing the spec. The orchestrator then pauses for the owner or goes on, by the pause rule in `AGENTS.md`'s ICM section, which reads the spec's Target files and Production touch points.
 
@@ -50,7 +50,7 @@ One file: `workflow/stages/01_spec/output/task-<id>-spec.md`. Nothing else. The 
 
 ## Verify
 
-- {{text_style_rule}}
+- No em dash (U+2014) in any file you write or touch.
 
 ## Never
 

@@ -13,7 +13,7 @@
 
 3. **Scope:** run `git diff --stat` and `git status --porcelain`. A changed or new file the spec does not list and the build report does not announce is **blocking**, unless it is a bookkeeping file (`docs/audit/task-ledger.md`, `workflow/stages/02_build/output/*`, which holds `task-<id>-build.md`).
 4. **Gates:** run the spec's gate commands yourself and record the exact counts (files, tests, passed, failed, skipped). Do not copy the builder's numbers. Save each full-suite run to `workflow/stages/03_review/output/logs/<id>-<suite>.log`. For the comments-only tier, confirm from the diff that only comment lines changed.
-   - **End-to-end:** run each end-to-end gate in its full form once (`{{e2e_cmd}}`). Skip a fast-form gate when a full-form gate covers the same spec files: the builder ran it, and your run covers it. Run any other end-to-end gate as written.
+   - **End-to-end:** run each end-to-end gate in its full form once (``npm run test:e2e``). Skip a fast-form gate when a full-form gate covers the same spec files: the builder ran it, and your run covers it. Run any other end-to-end gate as written.
 5. **Parity:** check every row of `AGENTS.md`'s parity map the change touches. For a task that ships the phase, also check the phase's ADR: its Status line must read exactly as the spec gave, with both `<sha>` placeholders still in. Anything else is **blocking**.
 6. **Tests:** for each new test, confirm it fails without the change, with the failure the spec gives. Skip this step when the spec's tests are `none`. The builder's red log alone is not enough: reproduce the red run yourself, and check the failure text against the spec's, because a missing module or a syntax error is a red for the wrong reason. Record `git status --porcelain` before and after, and show both are identical. Never `git checkout` or `git restore`, which would drop the task's changes. `HEAD` is the code before the task: only the orchestrator commits, and only after `APPROVED`. Save the failing run to `workflow/stages/03_review/output/logs/<id>-red.log`.
    When the task changes no non-test file, there is nothing to compare against: record `git diff -- <test file>`; make the temporary edit the spec names in the test file; run the test alone and record the failure the spec gives; undo that edit by hand; then show both outputs are identical to the recorded ones, so `git diff` holds only the task's changes. The methods below then do not apply. Otherwise use the first method that fits, and say in Not verified which one you used and why the earlier ones did not apply.
@@ -47,7 +47,7 @@ Only `APPROVED` or `CHANGES REQUESTED`. `BLOCKED` is not a verdict: use it when 
 
 ## Verify
 
-- {{text_style_rule}}
+- No em dash (U+2014) in any file you write or touch.
 
 ## Never
 
