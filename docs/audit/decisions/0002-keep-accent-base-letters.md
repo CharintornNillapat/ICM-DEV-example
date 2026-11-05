@@ -1,6 +1,6 @@
 # 0002: keep the base letter of accented Latin letters
 
-**Status:** Accepted. Implemented in Phase 001 (T001): code `n/a (worked example)`, merged `n/a (worked example)`.
+**Status:** Superseded in part by 0004 (D2).
 
 **Date:** 2026-10-30
 

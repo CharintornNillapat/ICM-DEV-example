@@ -2,7 +2,7 @@
 
 A zero-dependency Node module that turns a title into a URL slug. It is the worked example of [ICM-DEV](https://github.com/CharintornNillapat/ICM-DEV), a template for delivering software with AI agents through spec, build and review stages. This repository was made from that template ("Use this template") and filled with Slugify's values, so `AGENTS.md`, `docs/contexts/slugify.md` and `docs/audit/` show what each part looks like in a real project.
 
-Filled from ICM-DEV commit [`363c13d`](https://github.com/CharintornNillapat/ICM-DEV/commit/363c13d) (the template after its fixes 1), plus the agent-description fix (F8).
+Filled from ICM-DEV commit [`9de319f`](https://github.com/CharintornNillapat/ICM-DEV/commit/9de319f) (the template after its fixes 2).
 
 ```js
 import { slugify } from './src/slugify.js';
