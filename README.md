@@ -30,7 +30,7 @@ node --test scripts/git-hooks/pre-push.test.mjs
 
 ## The recorded history
 
-Phase 001 (T001, accented letters) and Phase 002 (T002 and T003, the 80-character cap) are recorded in `docs/audit/task-ledger.md` and `docs/audit/refactor-log.md`. Each task's spec, build report and review are in `workflow/stages/*/output/`, and the ADRs are `docs/audit/decisions/0001-*` to `0003-*`.
+Phase 001 (T001, accented letters) and Phase 002 (T002 and T003, the 80-character cap) are recorded in `docs/audit/task-ledger.md` and `docs/audit/refactor-log.md`. Each task's spec, build report and review are in `workflow/stages/*/output/`, and the ADRs are `docs/audit/decisions/0001-*` to `0004-*`.
 
 - The task outputs are copied unchanged from the original runs, which ran before this repository existed, on an earlier version of the template. A command in them that names a commit (`git show df83222:...`) cannot be re-run here.
 - In the ledger and the log, `n/a (worked example)` means the commit does not exist anywhere you can read; `n/a (worked example; ran in ICM-DEV at <sha>)` means it is a commit in ICM-DEV's history. Nothing here was merged through this repository.
